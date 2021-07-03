@@ -94,46 +94,5 @@ also in backend/settings.py (at the bottom), add the CORS_ORIGIN_WHITELIST code.
 <h1>recap :</h1>
 <h1>there is now a SQLite (by django default) database storing information that can be Created, Read, Updated and Deleted in either the django admin dashboard or through the API framework interface.  the database information is now available via an API so that a frontend can be built to use the data.</h1>
 
-
-
-
-
-<!-- <ol>
-<li>Create that Dockerfile</li>
-	<ul>
-		<li>In the root directory, create <b>Dockerfile</b> (with no extention)</li>
-		<li>It is good practice to also create <b>.dockerignore</b></li>
-		<li>In <b>Dockerfile</b>:</li>
-			<ul>
-				<li>FROM <i>::insert-environment: example: <code>python:3.8-slim-buster</code> :: </i> </li>
-				<li>WORKDIR /app </li>
-				<li>COPY . . </li>
-				<li>RUN <i>::insert-install-command: example: <code>pip3 install -r requirements.txt</code> ::</i> </li>
-				<li>CMD <i>::insert-final-command: example:<code> ["python", "manage.py", "runserver", "0.0.0.0:8000"]</code> ::</i></li>
-			</ul>
-	</ul>
-<li>Build that image with <code><b>docker build</b></code>:</li>
-	<ul>
-		<li>In the root directory (with the <b>Dockerfile</b>): <br> 
-			<code>docker build -t <i>:insert-tag-name:</i> .</code></li>
-			<ul>
-			<li>That runs the commands in the <b>Dockerfile</b> and creates an image titled what was on the <code>-t</code> flag, the <code>.</code> at the end tells docker to look for the <b>Dockerfile</b> in the current directory</li>
-			<li>The image should now be visible on Docker Desktop too</li>
-			</ul>
-	</ul>
-</ol>
-
-<h3>Start The App Container</h3>
-<ol>
-<li>Start with <code><b>docker run</b></code> :</li>
-	<ul>
-		<li><code><b>docker run -dp 8000:8000 <i>::insert-image-name::</i></b></code></li>
-		<ul>
-			<li> The <code>-d</code> and <code>-p</code> tags can be combined. </li><li>The <code>-d</code> flag is for running the new container in <b>detached</b> mode.</li>
-			<li>The <code>-p</code> flag maps the <b>ports</b> between the host's port to the container's port</li>
-		</ul>
-	</ul>
-</ol> -->
-<!-- <h1>this is where my shit breaks.  if I use Docker Desktop it does not mount and exits immediately.  the terminal build command </h1><code>docker run -dp 8000:8000 odb-docker</code><h1> spits out a code</h1><code>43fcdba49c66fdaf4a32ba7ccba99b7531708d4fc9dbcbc8042b86d0c9c5b9b7</code><h1>that I am not sure what to do with lol</h1> -->
 </body>
 </html>
