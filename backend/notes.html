@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Django Notes:</title>
+  <!-- <link rel="stylesheet" href="./notes.css"> -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+h1{
+	font-family: 'Shadows Into Light', cursive;
+}
+body{
+	font-family: sans-serif;
+	color: ghostwhite;
+	display: flex;
+	background-color: black;
+	background-image: url("https://cutewallpaper.org/21/gif-background-hd/Space-Stars-Black-Background-Gif-1920x1080-.gif");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+</style>
+</head>
+<div class="stars">
+<body>
+<h1><u>Django API Notes:</u></h1>
+
+<h3>Set up environment:</h3>
+<p>note: pipenv is tight bc it manages both the virtual environment and the dev dependencies.</p>
+	<ul>
+		<li>it does that via Pipfile which is similar to requirements.txt and Pipfile.lock which is JSON</li>
+	</ul>
+<p>in the terminal:</p>
+<code>pipenv --three</code> <li>create the Pipfile and environment using latest Python 3</li>
+<br>
+<code>pipenv shell</code> <li>activate the environment</li>
+<br>
+<code>pipenv install django djangorestframework django-cors-headers</code> <li>install django and the api dependencies</li>
+<br>
+<code>cd backend</code> <li>change directory bc django creates a new one for the project</li>
+<br>
+<code>python manage.py startapp dailyzen</code> <li>start an app</li>
+<br>
+<code>python manage.py migrate</code>
+<br><br>
+<code>python manage.py runserver</code> <li>fire up the dev server</li>
+<br><br>
+<p>django will run on <code>http://localhost:8000</code> by default</p>
+<br>
+
+
+<h3>Set up database:</h3>
+<p>
+	register the app by installing it in backend/settings.py
+</p>
+<p>
+	create the model in dailyzen/models.py to define how data will be stored in the database 
+</p>
+<br>
+<p>back in the terminal:</p>
+<code>python manage.py makemigrations</code> <li>create the migration file</li>
+<br>
+<code>python manage.py migrate</code> <li> now apply changes to the database</li>
+<br>
+<p>
+	register the database with the admin to use built in django admin app in dailyzen/admin.py
+</p> <li>can be just one line of code. example - <code>admin.site.register(Quote)</code> </li>
+<br>
+<code>python manage.py createsuperuser</code> <li>create a superuser before you fire the dev server back up</li>
+<br>
+<code>python manage.py runserver</code>
+<li>now you can access <code>http://localhost:8000/admin</code></li>
+<br>
+<p>from the django admin dashboard, you can go in and now perform all CRUD operations on the database</p>
+<br>
+
+<h3>Set up the API:</h3>
+<p>this is where you would need to install <code>djangorestframework</code> and <code>django-cors-headers</code> if this wasn't already done.</p>
+
+<p>
+now these both need to be installed in backend/settings.py, <code>'corsheaders'</code> and <code>'rest_framework'</code> go in INSTALLED_APPS and <code>'corsheaders.middleware.CorsMiddleware'</code>	has to be registered in MIDDLEWARE
+</p>
+<p>
+also in backend/settings.py (at the bottom), add the CORS_ORIGIN_WHITELIST code.  note: django-cors-headers is a Python library that will prevent the errors that you would normally get due to CORS rules
+</p>
+<h4>Create serializers:</h4>
+<p>serializers to convert model instances to JSON</p>
+<p>create a serializers file in the app: dailyzen/serializers.py</p>
+<h4>Create the view:</h4>
+<p>add a view class in dailyzen/views.py</p>
+<li>make sure to import the model, the serializer and viewsets from rest_framework: viewsets provides implementation for CRUD operations by default.</li>
+<p>now configure the URL path for the API in backend/urls.py</p>
+<p>tight, now you can view the API in the browser <code>http://localhost:8000/api/quotes/</code> and perform all CRUD operations from the django rest framework interface.  to see an individual item, put the id (number) at the end of the URL</p>
+<br><br>
+<h1>recap :</h1>
+<h1>there is now a SQLite (by django default) database storing information that can be Created, Read, Updated and Deleted in either the django admin dashboard or through the API framework interface.  the database information is now available via an API so that a frontend can be built to use the data.</h1>
+
+
+
+
+
+<!-- <ol>
+<li>Create that Dockerfile</li>
+	<ul>
+		<li>In the root directory, create <b>Dockerfile</b> (with no extention)</li>
+		<li>It is good practice to also create <b>.dockerignore</b></li>
+		<li>In <b>Dockerfile</b>:</li>
+			<ul>
+				<li>FROM <i>::insert-environment: example: <code>python:3.8-slim-buster</code> :: </i> </li>
+				<li>WORKDIR /app </li>
+				<li>COPY . . </li>
+				<li>RUN <i>::insert-install-command: example: <code>pip3 install -r requirements.txt</code> ::</i> </li>
+				<li>CMD <i>::insert-final-command: example:<code> ["python", "manage.py", "runserver", "0.0.0.0:8000"]</code> ::</i></li>
+			</ul>
+	</ul>
+<li>Build that image with <code><b>docker build</b></code>:</li>
+	<ul>
+		<li>In the root directory (with the <b>Dockerfile</b>): <br> 
+			<code>docker build -t <i>:insert-tag-name:</i> .</code></li>
+			<ul>
+			<li>That runs the commands in the <b>Dockerfile</b> and creates an image titled what was on the <code>-t</code> flag, the <code>.</code> at the end tells docker to look for the <b>Dockerfile</b> in the current directory</li>
+			<li>The image should now be visible on Docker Desktop too</li>
+			</ul>
+	</ul>
+</ol>
+
+<h3>Start The App Container</h3>
+<ol>
+<li>Start with <code><b>docker run</b></code> :</li>
+	<ul>
+		<li><code><b>docker run -dp 8000:8000 <i>::insert-image-name::</i></b></code></li>
+		<ul>
+			<li> The <code>-d</code> and <code>-p</code> tags can be combined. </li><li>The <code>-d</code> flag is for running the new container in <b>detached</b> mode.</li>
+			<li>The <code>-p</code> flag maps the <b>ports</b> between the host's port to the container's port</li>
+		</ul>
+	</ul>
+</ol> -->
+<!-- <h1>this is where my shit breaks.  if I use Docker Desktop it does not mount and exits immediately.  the terminal build command </h1><code>docker run -dp 8000:8000 odb-docker</code><h1> spits out a code</h1><code>43fcdba49c66fdaf4a32ba7ccba99b7531708d4fc9dbcbc8042b86d0c9c5b9b7</code><h1>that I am not sure what to do with lol</h1> -->
+</body>
+</html>
